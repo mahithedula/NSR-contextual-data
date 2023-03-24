@@ -12,7 +12,7 @@ function converter(URL) {
   
   for (var i = 1; i < data.length; i++) {
     var row = {};
-    row["id"] = Utilities.getUuid()
+    row["id"] = Utilities.getUuid();
     for (var j = 0; j < headers.length; j++) {
       row[new_headers[j]] = data[i][j];
     }
