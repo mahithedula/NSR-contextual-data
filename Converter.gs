@@ -20,7 +20,5 @@ function converter(URL) {
   }
   
   var jsonString = JSON.stringify(output);
-  var folder = DriveApp.getFolderById('1Ljq_BE7dpQ8aVcF2O9gX7r2VtFBvIdfp');
-  var file = folder.createFile("output_file.json", jsonString, "application/json");
-  return file.getId();
+  return jsonString;
 }
