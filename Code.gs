@@ -6,7 +6,6 @@ function myFunction() {
   /**
    * Converts the given form URL into a JSON object.
    */
-
   var jsonOutput = converter(URL);
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
 }
