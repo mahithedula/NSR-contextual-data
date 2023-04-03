@@ -8,7 +8,6 @@ function myFunction() {
    */
   var jsonOutput = converter(URL);
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
-
   moveData(URL);
   Logger.log("Tagged data are moved to sheet 2");
 }
