@@ -18,7 +18,7 @@ function converter(URL) {
     }
     output.push(row);
   }
-  
+
   var jsonString = JSON.stringify(output);
   return jsonString;
 }
