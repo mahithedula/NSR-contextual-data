@@ -10,7 +10,18 @@ function isZipCode(str) {
   return false;
 }
 
-
+function validZipCodes(URL, data){
+  var spreadsheet = SpreadsheetApp.openByUrl(URL);
+  var sheet = spreadsheet.getSheets()[0];
+  var firstRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var zipCode = firstRow.indexOf("Zip Code");
+  for(let i=0; i< data.length; i++){
+    if(!isZipCode(data[i][zipCode])){
+      return false;
+    }
+  }
+  return true;
+}
 
 function initializeRequiredSet() {
   let requiredColumns = [0,1,2,3,4,5,6,8,10,12,14];
