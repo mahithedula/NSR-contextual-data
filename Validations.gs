@@ -1,10 +1,11 @@
 let requiredColumnsSet = new Set();
 //taking in zipCode parameter, outputting boolean
-function isZipCode(str) {
-  if(typeof str != "string") {
-    str.toString();
+function isZipCode(num) {
+  Logger.log(num);
+  if(typeof num != "number"){
+    return false;
   }
-  if(!isNaN(str) && str.length == 5){
+  if(num >= 10000 && num <= 99999){
     return true;
   }
   return false;
@@ -15,8 +16,9 @@ function validZipCodes(URL, data){
   var sheet = spreadsheet.getSheets()[0];
   var firstRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
   var zipCode = firstRow.indexOf("Zip Code");
-  for(let i=0; i< data.length; i++){
+  for(let i=1; i< data.length; i++){
     if(!isZipCode(data[i][zipCode])){
+      Logger.log(data[i][zipCode]);
       return false;
     }
   }
