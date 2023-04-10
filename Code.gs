@@ -25,14 +25,14 @@ function myFunction() {
   Logger.log("Tagged data are moved to sheet 2");
 
   var options = {
-    method: "PUT",
+    method: "POST",
     muteHttpExceptions: true, 
     headers: {
       "Authorization": "Token 0848ea8805a48b780f32f3742851a1fe3f8d233e"
     },
-    payload: {org: 1, data: jsonOutput}
+    payload: {org: null, data: jsonOutput}
   }
-  var response = UrlFetchApp.fetch('https://vibrancy.newsunrising.org/api/community-context-surveys', options);
+  var response = UrlFetchApp.fetch('https://vibrancy.newsunrising.org/api/community-context-surveys/', options);
   Logger.log("Sent with response: " + response);
 
 }

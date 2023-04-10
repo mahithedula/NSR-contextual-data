@@ -26,7 +26,7 @@ function validZipCodes(URL, data){
 }
 
 function initializeRequiredSet() {
-  let requiredColumns = [0,1,2,3,4,5,6,8,10,12,14];
+  let requiredColumns = [0,1,2,3,4,5,6,7,9,11,13,15];
   for (let i=0; i < requiredColumns.length ; i++ )
     requiredColumnsSet.add(requiredColumns[i]);
 }
