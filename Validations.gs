@@ -15,12 +15,21 @@ function isZipCode(num) {
   return false;
 }
 
-// function initializeRequiredColumns() {
-//   let requiredColumns = [0,1,2,3,4,5,6,7,9,11,13,15];
-//   for (let i=0; i < requiredColumns.length ; i++ )
-//     requiredColumnsSet.add(requiredColumns[i]);
-// }
-
+/*
+* Initializes the required columns array
+* Parameters: 
+* - data: Data of the first sheet with untagged responses
+* Returns: array of the index numbers of required columns
+*/
+function initializeRequiredColumns(data) {
+  let columnNames = ["SDG","Community Capital","Timestamp","Date","City","State","Zip Code",
+	"What is the name of your community's geography or issue/identity that you are reflecting on during this survey? (3 words or less)","Are you providing feedback as part of a specific project or organization?","Where do you see assets, strength, beauty, and/or opportunity in your community? (be brief, 10 words of less)","What are the barriers and/or challenges in your community? (be brief, 10 words of less)","What do you hope for your community? (be brief, 10 words or less)","What do you fear for your community? (be brief, 10 words or less)","What do you expect from your community? (be brief, 10 words or less)]"]
+  var required = [];
+  for(i=0; i<columnNames.length; i++){
+    required.push(data[0].indexOf(columnNames[i]));
+  }
+  return required;
+}
 
 /*
 * Validates each row of the data
@@ -33,12 +42,12 @@ function isZipCode(num) {
 function checkRow(row, zipIndex, required){
   //check the zipCode
   if(!isZipCode(row[zipIndex])){
-    return "Invalid ZipCode at Row " + r;
+    return "Invalid ZipCode at Row " + row;
   }
   //check required columns
   for(i=0; i<required.length; i++){
     if(row[required[i]] === ''){
-      return "Required Columns not Filled at Row " + r + " and column " + i;
+      return "Required Columns not Filled at Row " + row + " and column " + required[i];
     }
   }
   return "";
