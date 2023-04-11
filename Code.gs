@@ -10,14 +10,11 @@ function myFunction() {
   var dataRange = sheet.getDataRange();
   var data = dataRange.getValues()
   
-  if(!validZipCodes(URL, data)){
-    Logger.log('Zip Codes not correct');
-    return;
-  }
-  if(!requiredColumnsFilled(data)){
-    Logger.log('Required columns not filled');
-    return;
-  }
+  var requiredColumns = [];
+  
+  //Validate Data
+  var response = checkRows(data, requiredColumns);
+  
   var jsonOutput = converter(URL);
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
 

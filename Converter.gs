@@ -1,4 +1,3 @@
-
 function converter(URL) {
   var sheet = SpreadsheetApp.openByUrl(URL);
   var dataRange = sheet.getDataRange();
