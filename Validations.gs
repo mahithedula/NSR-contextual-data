@@ -46,3 +46,31 @@ function requiredColumnsFilled(data, required = requiredColumnsSet){
   }
   return true;
 }
+
+/*
+* Validates each row of the data
+* Parameters: 
+* - row: array representing the row of the data to be validated
+* - zipIndex: index of the zipcode
+* - required: array of the index numbers of required columns
+* Returns: Empty string if valid or the error message if invalid
+*/
+function checkRow(row, zipIndex, required){
+  //check the zipCode
+  if(!isZipCode(row[zipIndex])){
+    return "Invalid ZipCode at Row " + r;
+  }
+  //check required columns
+  for(i=0; i<required.length; i++){
+    if(row[required[i]] === ''){
+      return "Required Columns not Filled at Row " + r + " and column " + i;
+    }
+  }
+}
+
+/*
+* Checks all the rows of the data
+* Parameters:
+*
+* Returns: 
+*/
