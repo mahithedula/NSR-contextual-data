@@ -10,14 +10,16 @@ function myFunction() {
   var dataRange = sheet.getDataRange();
   var data = dataRange.getValues()
   
-  if(!validZipCodes(URL, data)){
-    Logger.log('Zip Codes not correct');
+  var requiredColumns = initializeRequiredColumns(data);
+  
+  //Validate Data
+  var response = checkRows(data, requiredColumns);
+  
+  if(response !== ""){
+    Logger.log(response);
     return;
   }
-  if(!requiredColumnsFilled(data)){
-    Logger.log('Required columns not filled');
-    return;
-  }
+
   var jsonOutput = converter(URL);
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
 
@@ -28,7 +30,7 @@ function myFunction() {
     method: "POST",
     muteHttpExceptions: true, 
     headers: {
-      "Authorization": "Token 0848ea8805a48b780f32f3742851a1fe3f8d233e"
+      "Authorization": "Token " + api_token
     },
     payload: {org: null, data: jsonOutput}
   }
