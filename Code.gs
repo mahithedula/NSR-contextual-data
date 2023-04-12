@@ -15,6 +15,11 @@ function myFunction() {
   //Validate Data
   var response = checkRows(data, requiredColumns);
   
+  if(response !== ""){
+    Logger.log(response);
+    return;
+  }
+
   var jsonOutput = converter(URL);
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
 
