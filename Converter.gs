@@ -1,18 +1,7 @@
-function converter(URL) {
-  var sheet = SpreadsheetApp.openByUrl(URL);
-  var dataRange = sheet.getDataRange();
-  var data = dataRange.getValues();
-  
-  var headers = data[0];
+function converter(headers, data) {
   var output = [];
-
-  //change header names
-  var new_headers = ["Timestamp", "City", "State", "Zip", "GeoIssue", "Org", "Assets", "AssetFile", "Barriers", "BarriersFile", "Hopes", "HopesFile", "Fears", "FearsFile", "Expectations", "ExpectationsFile", "Tag"]
   
-
-  
-  
-  for (var i = 1; i < data.length; i++) {
+  for (var i = 0; i < data.length; i++) {
 
     const nsr_qs = [];
     const org_qs = [];
