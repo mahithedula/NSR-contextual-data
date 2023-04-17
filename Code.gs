@@ -24,14 +24,15 @@ function myFunction() {
   var validData = [];
   var moveData = [];
   var invalidData = [];
-
   for(r=1; r<untagged_data.length; r++){
     row = untagged_data[r];
+    Logger.log(row);
     if(checkRow(untagged_data[r], zipIndex, requiredColumns) === ""){ 
       validData.push(row);
-      if (row[sdgIndex] !== "" && row[capitalIndex] !== "") 
+      if (row[sdgIndex] !== "" && row[capitalIndex] !== ""){
         moveData.push(row);
-        sheet1.deleteRow(r);
+        sheet1.deleteRow(r+1);
+      }
     }
     else{
       invalidData.push(row);
@@ -40,30 +41,30 @@ function myFunction() {
   }
 
   //read headers store in header array
-  var untagged_headers = untagged_data[0];
-  var tagged_headers = tagged_data[0];
+  var untagged_headers = sheet1.getRange(1,1,1,sheet1.getLastColumn()).getValues();
+  var tagged_headers = sheet2.getRange(1,1,1,sheet1.getLastColumn());
   
   if (untagged_headers.every((val, index) => val == tagged_headers[index])){
     sheet2.appendRow(moveData);
   }
   else {
     sheet2.insertRowsBefore(1, moveData.length + 2);
-    sheet2.getRange(1,1, 1, untagged_headers.length()).setValues(untagged_headers);
-    sheet2.getRange(2, 2 + moveData.length, 1, untagged_headers.length()).setValues(moveData);
+    sheet2.getRange(1,1, 1, untagged_data[0].length).setValues(untagged_headers);
+    sheet2.getRange(2, 1, moveData.length, untagged_data[0].length).setValues(moveData);
   }   
 
   var jsonOutput = converter(untagged_headers, validData);
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
 
-  var options = {
-    method: "POST",
-    muteHttpExceptions: true, 
-    headers: {
-      "Authorization": "Token " + api_token
-    },
-    payload: {org: null, data: jsonOutput}
-  }
-  var response = UrlFetchApp.fetch('https://vibrancy.newsunrising.org/api/community-context-surveys/', options);
-  Logger.log("Sent with response: " + response);
+  // var options = {
+  //   method: "POST",
+  //   muteHttpExceptions: true, 
+  //   headers: {
+  //     "Authorization": "Token " + api_token
+  //   },
+  //   payload: {org: null, data: jsonOutput}
+  // }
+  // var response = UrlFetchApp.fetch('https://vibrancy.newsunrising.org/api/community-context-surveys/', options);
+  // Logger.log("Sent with response: " + response);
 
 }
