@@ -1,4 +1,3 @@
-
 const URL = "https://docs.google.com/spreadsheets/d/1ZSX-3UuxJnq0ti0HF-J5Mvyh5BtJ3OyeSt2dDP-EI3o/edit?resourcekey#gid=142789237";
 
 
@@ -6,29 +5,61 @@ function myFunction() {
   /**
    * Converts the given form URL into a JSON object.
    */
-  var sheet = SpreadsheetApp.openByUrl(URL);
-  var dataRange = sheet.getDataRange();
-  var data = dataRange.getValues()
+  var spreadsheet = SpreadsheetApp.openByUrl(URL);
+  var sheet1 = spreadsheet.getSheets()[0];
+  var sheet2 = spreadsheet.getSheets()[1];
   
-  if(!validZipCodes(URL, data)){
-    Logger.log('Zip Codes not correct');
-    return;
+  var untagged_dataRange = sheet1.getDataRange();
+  var untagged_data = untagged_dataRange.getValues();
+  var requiredColumns = initializeRequiredColumns(untagged_data);
+
+  var tagged_dataRange = sheet2.getDataRange();
+  var tagged_data = tagged_dataRange.getValues();
+  
+  var zipIndex = untagged_data[0].indexOf("Zip Code");
+  var sdgIndex = untagged_data[0].indexOf("SDG");
+  var capitalIndex = untagged_data[0].indexOf("Community Capital");
+
+  var validData = [];
+  var moveData = [];
+  var invalidData = [];
+  for(r=1; r<untagged_data.length; r++){
+    row = untagged_data[r];
+    Logger.log(row);
+    if(checkRow(untagged_data[r], zipIndex, requiredColumns) === ""){ 
+      validData.push(row);
+      if (row[sdgIndex] !== "" && row[capitalIndex] !== ""){
+        moveData.push(row);
+        sheet1.deleteRow(r+1);
+      }
+    }
+    else{
+      invalidData.push(row);
+    }
+
   }
-  if(!requiredColumnsFilled(data)){
-    Logger.log('Required columns not filled');
-    return;
+
+  //read headers store in header array
+  var untagged_headers = sheet1.getRange(1,1,1,sheet1.getLastColumn()).getValues();
+  var tagged_headers = sheet2.getRange(1,1,1,sheet1.getLastColumn());
+  
+  if (untagged_headers.every((val, index) => val == tagged_headers[index])){
+    sheet2.appendRow(moveData);
   }
-  var jsonOutput = converter(URL);
+  else {
+    sheet2.insertRowsBefore(1, moveData.length + 2);
+    sheet2.getRange(1,1, 1, untagged_data[0].length).setValues(untagged_headers);
+    sheet2.getRange(2, 1, moveData.length, untagged_data[0].length).setValues(moveData);
+  }   
+
+  var jsonOutput = converter(untagged_headers, validData);
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
-
-  moveData(URL);
-  Logger.log("Tagged data are moved to sheet 2");
-
+  
   var options = {
     method: "POST",
     muteHttpExceptions: true, 
     headers: {
-      "Authorization": "Token 0848ea8805a48b780f32f3742851a1fe3f8d233e"
+      "Authorization": "Token " + api_token
     },
     payload: {org: null, data: jsonOutput}
   }
