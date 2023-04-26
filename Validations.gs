@@ -5,7 +5,6 @@
 */
 
 function isZipCode(num) {
-  Logger.log(num);
   if(typeof num != "number"){
     return false;
   }
