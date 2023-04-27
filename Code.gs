@@ -12,9 +12,6 @@ function myFunction() {
   var untagged_dataRange = sheet1.getDataRange();
   var untagged_data = untagged_dataRange.getValues();
   var requiredColumns = initializeRequiredColumns(untagged_data);
-
-  var tagged_dataRange = sheet2.getDataRange();
-  var tagged_data = tagged_dataRange.getValues();
   
   var zipIndex = untagged_data[0].indexOf("Zip Code");
   var sdgIndex = untagged_data[0].indexOf("SDG");
@@ -41,7 +38,7 @@ function myFunction() {
 
   //iterate through the invalidData and set background yellow
   for(var i=0; i<invalidData.length; i++){
-    sheet1.getRange(r+1, 1, 1, sheet1.getLastColumn()).setBackground("yellow");
+    sheet1.getRange(r, 1, 1, sheet1.getLastColumn()).setBackground("yellow");
   }
 
 
