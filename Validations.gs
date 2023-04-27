@@ -64,5 +64,6 @@ function checkRow(row, zipIndex, required){
   }
   return "";
 }
+
   
 

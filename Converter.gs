@@ -1,4 +1,3 @@
-
 function filtering_put_requests(timestamp, retrieved_untagged_data){ 
   //filtering through retrieved_untagged_data
   for(var index = 0; index < retrieved_untagged_data.length; index++){

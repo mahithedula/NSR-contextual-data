@@ -20,7 +20,7 @@ function myFunction() {
   var validData = [];
   var moveData = [];
   var invalidData = [];
-
+  
   for(r=1; r<untagged_data.length; r++){
     row = untagged_data[r];
     if(checkRow(untagged_data[r], zipIndex, requiredColumns) === ""){ 
@@ -50,6 +50,7 @@ function myFunction() {
 
   //read headers store in header array
   var untagged_headers = sheet1.getRange(1,1,1,sheet1.getLastColumn()).getValues();
+
   var tagged_headers = sheet2.getRange(1,1,1,sheet1.getLastColumn()).getValues();
   if (moveData.length>0 && untagged_headers.length == tagged_headers.length){
     //find the first empty row
