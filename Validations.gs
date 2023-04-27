@@ -5,7 +5,6 @@
 */
 
 function isZipCode(num) {
-  Logger.log(num);
   if(typeof num != "number"){
     return false;
   }
@@ -66,27 +65,5 @@ function checkRow(row, zipIndex, required){
   return "";
 }
 
-/*
-* Checks all the rows of the data
-* Parameters:
-* - data: Data of the first sheet with untagged responses
-* - required: Indices of required columns
-* Returns: String of the error message or an empty string if inputs are valid
-*/
-function checkRows(data,required) {
-  zipIndex = data[0].indexOf("Zip Code");
-  
-  response = "";
-
-  //starting at 1 to avoid data 
-  for (i=1; i<data.length; i++){
-    response = checkRow(data[i], zipIndex, required);
-    //Error message received
-    if(response !== ""){
-      return response;
-    }
-  }
-  return "";
-}
   
 
