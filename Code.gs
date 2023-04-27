@@ -79,16 +79,21 @@ function myFunction() {
   var put_requests = conversion[1];
   Logger.log("All responses are converted to JSON: \n" + jsonOutput);
   
-  var options = {
-    method: "POST",
-    muteHttpExceptions: true, 
-    headers: {
-      "Authorization": "Token " + api_token
-    },
-    payload: {org: null, data: jsonOutput}
+  if(jsonOutput.length == 0){
+    Logger.log("No new request to POST");
   }
-  var response = UrlFetchApp.fetch('https://vibrancy.newsunrising.org/api/community-context-surveys/', options);
-  Logger.log("Sent with response: " + response);
+  else{
+    var options = {
+      method: "POST",
+      muteHttpExceptions: true, 
+      headers: {
+        "Authorization": "Token " + api_token
+      },
+      payload: {org: null, data: jsonOutput}
+    }
+    var response = UrlFetchApp.fetch('https://vibrancy.newsunrising.org/api/community-context-surveys/', options);
+    Logger.log("Sent with response: " + response);
+  }
 
   send_put_requests(put_requests);
 

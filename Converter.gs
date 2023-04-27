@@ -6,10 +6,12 @@ function filtering_put_requests(timestamp, retrieved_untagged_data){
     var entry_index = 0;
     while(entry["data"] != null && entry_index < entry["data"].length ){
       var retrieved_timestamp = entry["data"][entry_index]["Org Questions"][0][1]
-      var new_retrieved_timestamp = Date.parse(retrieved_timestamp); 
-      var new_timestamp = Date.parse(timestamp);
-      if(new_retrieved_timestamp == new_timestamp){
-        return entry["data"][entry_index]["id"];
+      var retrieved_timestamp = Date.parse(retrieved_timestamp); 
+      var timestamp = Date.parse(timestamp);
+      var diff = retrieved_timestamp - timestamp;
+      Logger.log("B" + retrieved_timestamp-timestamp)
+      if(diff < 10000 && diff >-10000){
+        return entry["id"];
       }
       entry_index++;
     }

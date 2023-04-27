@@ -24,5 +24,6 @@ function retrieveEntries() {
       }
     }    
   });
+  Logger.log(retrieved_untagged_data)
   return retrieved_untagged_data;
 }
